@@ -1,8 +1,8 @@
 name: BurgerSellWands
 main: Heisenburger69\BurgerSellWands\Main
 version: 1.0.0
-api: 3.0.0
-author: Heisenburger69
+api: 4.0.0
+author: Heisenburger69, Mint
 description: Plugin implements fully customizable BurgerSellWands for PMMP
 depend: ["EconomyAPI"]
 
