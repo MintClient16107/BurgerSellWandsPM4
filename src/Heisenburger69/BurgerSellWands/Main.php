@@ -149,11 +149,7 @@ class Main extends PluginBase implements Listener
      */
     public function constructWand(int $uses): Item
     {
-        $id = $this->cfg->get("sell-wand-item-id");
-        if (!is_int($id)) {
-            $id = VanillaItems::DIAMOND_HOE;
-        }
-        $item = VanillaItems::($id);
+        $item = VanillaItems::DIAMOND_HOE;
         $item->setNamedTagEntry(new IntTag("sellwand", $uses));
 
         if($uses < 0) {
