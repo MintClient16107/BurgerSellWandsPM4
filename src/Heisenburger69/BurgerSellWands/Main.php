@@ -15,7 +15,7 @@ use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\IntTag;
 use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
-use pocketmine\tile\Chest;
+use pocketmine\block\tile\Chest;
 use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as C;
 
@@ -105,8 +105,8 @@ class Main extends PluginBase implements Listener
             $x = $block->getX();
             $y = $block->getY();
             $z = $block->getZ();
-            $level = $block->getLevel();
-            $chest = $level->getTile(new Vector3($x, $y, $z));
+            $level = $block->getWorld();
+            $chest = $level->getTileAt(new Vector3($x, $y, $z));
             if ($chest instanceof Chest) {
                 $inv = $chest->getInventory()->getContents();
                 $revenue = 0;
