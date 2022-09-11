@@ -1,6 +1,3 @@
-#The Item ID for the SellWand, the default is a WOODEN_HOE
-sell-wand-item-id: 290
-
 #The Name to be given to the Sell Wand. Use & for colors.
 sell-wand-item-name: "&l&bSell Wand"
 
