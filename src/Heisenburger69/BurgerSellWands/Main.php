@@ -149,7 +149,7 @@ class Main extends PluginBase implements Listener
      */
     public function constructWand(int $uses): Item
     {
-        $item = VanillaItems::DIAMOND_HOE;
+        $item = VanillaItems::DIAMOND_HOE();
         $item->setNamedTagEntry(new IntTag("sellwand", $uses));
 
         if($uses < 0) {
@@ -194,11 +194,11 @@ class Main extends PluginBase implements Listener
 
         if($value === 0) {
             $player->sendMessage(C::RED . "Your Sell Wand broke!");
-            $player->getInventory()->setItemInHand(VanillaItems::get(VanillaItems::AIR));
+            $player->getInventory()->setItemInHand(VanillaItems::AIR());
             return;
         }
 
         $wand = $this->constructWand((int)$value);
-        $player->getInventory()->setItemInHand($wand);
+        $player->getInventory()->setItemInHand($value);
     }
 }
