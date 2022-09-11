@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Heisenburger69\BurgerSellWands;
 
 use onebone\economyapi\EconomyAPI;
-use pocketmine\block\Block;
+use pocketmine\block\BlockLegacyIds;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
-use pocketmine\item\Item;
+use pocketmine\item\VanillaItems;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\IntTag;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\tile\Chest;
 use pocketmine\utils\Config;
@@ -44,7 +44,7 @@ class Main extends PluginBase implements Listener
                     $sender->sendMessage(C::RED . "Use /sellwand <player> <uses>");
                     return false;
                 }
-                $player = $this->getServer()->getPlayer($args[0]);
+                $player = $this->getServer()->getPlayerByPrefix($args[0]);
                 if ($player === null) {
                     $sender->sendMessage(C::RED . "Player not found!");
                     return false;
@@ -101,7 +101,7 @@ class Main extends PluginBase implements Listener
         }
 
 
-        if ($block->getId() === Block::CHEST) {
+        if ($block->getId() === BlockLegacyIds::CHEST) {
             $x = $block->getX();
             $y = $block->getY();
             $z = $block->getZ();
@@ -112,8 +112,8 @@ class Main extends PluginBase implements Listener
                 $revenue = 0;
                 $prices = $this->cfg->get("prices");
                 foreach ($inv as $item) {
-                    if (isset($prices[$item->getID() . ":" . $item->getDamage()])) {
-                        $revenue = $revenue + ($item->getCount() * $prices[$item->getID() . ":" . $item->getDamage()]);
+                    if (isset($prices[$item->getID() . ":" . $drop->getMeta()])) {
+                        $revenue = $revenue + ($item->getCount() * $prices[$item->getID() . ":" . $drop->getMeta()]);
                         $chest->getInventory()->remove($item);
                     } elseif (isset($prices[$item->getID()])) {
                         $revenue = $revenue + ($item->getCount() * $prices[$item->getID()]);
@@ -138,7 +138,7 @@ class Main extends PluginBase implements Listener
                 $player->sendMessage(C::colorize(str_replace("{MONEY}", (string)$revenue, $usedMsg)));
                 EconomyAPI::getInstance()->addMoney($player->getName(), (int)$revenue);
                 $this->subtractUse($wand, $player);
-                $event->setCancelled(true);
+                $event->cancel(true);
             }
         }
     }
@@ -151,9 +151,9 @@ class Main extends PluginBase implements Listener
     {
         $id = $this->cfg->get("sell-wand-item-id");
         if (!is_int($id)) {
-            $id = Item::WOODEN_HOE;
+            $id = VanillaItems::DIAMOND_HOE;
         }
-        $item = Item::get($id);
+        $item = VanillaItems::($id);
         $item->setNamedTagEntry(new IntTag("sellwand", $uses));
 
         if($uses < 0) {
@@ -198,7 +198,7 @@ class Main extends PluginBase implements Listener
 
         if($value === 0) {
             $player->sendMessage(C::RED . "Your Sell Wand broke!");
-            $player->getInventory()->setItemInHand(Item::get(Item::AIR));
+            $player->getInventory()->setItemInHand(VanillaItems::get(VanillaItems::AIR));
             return;
         }
 
