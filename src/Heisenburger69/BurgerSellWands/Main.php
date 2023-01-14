@@ -150,7 +150,7 @@ class Main extends PluginBase implements Listener
     public function constructWand(int $uses): Item
     {
         $item = VanillaItems::DIAMOND_HOE();
-        $item->setNamedTag(new IntTag("sellwand", $uses));
+        $item->setInt("sellwand", $uses);
 
         if($uses < 0) {
             $uses = "Unlimited";
