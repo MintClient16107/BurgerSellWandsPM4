@@ -150,7 +150,7 @@ class Main extends PluginBase implements Listener
     public function constructWand(int $uses): Item
     {
         $item = VanillaItems::DIAMOND_HOE();
-        $item->setNamedTagEntry(new IntTag("sellwand", $uses));
+        $item->setNamedTag(new IntTag("sellwand", $uses));
 
         if($uses < 0) {
             $uses = "Unlimited";
@@ -184,7 +184,7 @@ class Main extends PluginBase implements Listener
 
     public function subtractUse(Item $item, Player $player): void
     {
-        $nbt = $item->getNamedTagEntry("sellwand");
+        $nbt = $item->getTag("sellwand") instanceof IntTag;
         if($nbt === null) {
             return;
         }
