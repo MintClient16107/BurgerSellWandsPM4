@@ -127,7 +127,7 @@ class Main extends PluginBase implements Listener
                         $noSellables = "&cThere are no items to sell in this Chest";
                     }
                     $player->sendMessage(C::colorize($noSellables));
-                    $event->setCancelled(true);
+                    $event->cancel(true);
                     return;
                 }
 
@@ -149,7 +149,11 @@ class Main extends PluginBase implements Listener
      */
     public function constructWand(int $uses): Item
     {
-        $item = VanillaItems::DIAMOND_HOE();
+        $id = $this->cfg->get("sell-wand-item-id");
+        if (!is_int($id)) {
+            $id = ItemIds::WOODEN_HOE;
+        }
+        $item = ItemFactory::getInstance()->get($id);
         $item->setInt("sellwand", $uses);
 
         if($uses < 0) {
