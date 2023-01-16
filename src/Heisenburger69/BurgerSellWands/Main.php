@@ -7,6 +7,7 @@ namespace Heisenburger69\BurgerSellWands;
 use onebone\economyapi\EconomyAPI;
 use pocketmine\block\BlockLegacyIds;
 use pocketmine\command\Command;
+use pocketmine\item\{ItemFactory, ItemIds};
 use pocketmine\command\CommandSender;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
